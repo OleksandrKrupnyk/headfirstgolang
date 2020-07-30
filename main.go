@@ -32,4 +32,8 @@ func main() {
 	subscriber2 := defaultSubscriber("Betn Ryan")
 	printInfo(subscriber2)
 
+	employee := magazine.Employee{Name: "Jorg", Salary: 500.0}
+	address := magazine.Address{Street: "North Ave", City: "New York", State: "NY", PostalCode: "644888"}
+	employee.Address = address
+	fmt.Println(employee.City)
 }
