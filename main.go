@@ -1,39 +1,35 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"magazine"
+)
 
-type subscriber struct {
-	name   string
-	rate   float64
-	active bool
+func printInfo(s *magazine.Subscriber) {
+	fmt.Println("Name:", s.Name)
+	fmt.Println("Monthly rate:", s.Rate)
+	fmt.Println("Active?:", s.Active)
 }
 
-func printInfo(s subscriber) {
-	fmt.Println("Name:", s.name)
-	fmt.Println("Monthly rate:", s.rate)
-	fmt.Println("Active?:", s.active)
+func defaultSubscriber(name string) *magazine.Subscriber {
+	var s magazine.Subscriber
+	s.Name = name
+	s.Rate = 5.99
+	s.Active = true
+	return &s
 }
 
-func defaultSubscriber(name string) subscriber {
-	var s subscriber
-	s.name = name
-	s.rate = 5.99
-	s.active = true
-	return s
-}
-
-func applyDiscount(s *subscriber) {
-	s.rate = 4.99
+func applyDiscount(s *magazine.Subscriber) {
+	s.Rate = 4.99
 }
 
 func main() {
 
 	subscriber1 := defaultSubscriber("Aman Sing")
-	applyDiscount(&subscriber1)
+	applyDiscount(subscriber1)
 	printInfo(subscriber1)
 
 	subscriber2 := defaultSubscriber("Betn Ryan")
-	fmt.Println("Name:", subscriber2.name)
 	printInfo(subscriber2)
 
 }
