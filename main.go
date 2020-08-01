@@ -7,21 +7,23 @@ import (
 )
 
 func main() {
-	date := calendar.Date{}
-	err := date.SetYear(1985)
+	event := calendar.Event{}
+	err := event.SetDay(3)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = date.SetMonth(8)
+	err = event.SetMonth(8)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = date.SetDay(3)
+	err = event.SetYear(2020)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(date)
-	fmt.Printf("Year is: %d\n", date.Year())
-	fmt.Printf("Month is: %d\n", date.Month())
-	fmt.Printf("Day is: %d\n", date.Day())
+
+	err = event.SetTitle("Hello me!")
+	fmt.Println(event.Year())
+	fmt.Println(event.Month())
+	fmt.Println(event.Day())
+	fmt.Println(event.Title())
 }
