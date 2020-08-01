@@ -1,26 +1,27 @@
 package main
 
 import (
+	"calendar"
 	"fmt"
-	"liquids"
+	"log"
 )
 
-type Number int
-
-func (n Number) Double() {
-	n *= 2
-}
-
-func (n *Number) Display() {
-	fmt.Println(*n)
-}
-
 func main() {
-	krazFuel := liquids.Liters(501.234)
-	fmt.Printf("KrAZ fuel is: %0.3f\n", krazFuel)
-	fordFuel := krazFuel.ToGallons()
-	fmt.Printf("Ford fuel is: %0.3f\n", fordFuel)
-	number := Number(4)
-	number.Double()
-	number.Display()
+	date := calendar.Date{}
+	err := date.SetYear(1985)
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = date.SetMonth(8)
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = date.SetDay(3)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(date)
+	fmt.Printf("Year is: %d\n", date.Year())
+	fmt.Printf("Month is: %d\n", date.Month())
+	fmt.Printf("Day is: %d\n", date.Day())
 }
