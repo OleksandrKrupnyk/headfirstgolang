@@ -2,10 +2,21 @@ package main
 
 import (
 	"fmt"
-	"liquids"
+	"io/ioutil"
+	"log"
 )
 
 func main() {
-	fmt.Println(liquids.Gallons(12.09248342))
-	fmt.Println(liquids.Liters(12.09248342))
+	files, err := ioutil.ReadDir("d:\\")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			fmt.Println("Directory:", file.Name())
+		} else {
+			fmt.Println("File:", file.Name())
+		}
+	}
 }
