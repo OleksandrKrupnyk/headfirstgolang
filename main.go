@@ -6,6 +6,17 @@ import (
 	"path/filepath"
 )
 
+func reportPanic() {
+	p := recover()
+	if p == nil {
+		return
+	}
+	err, ok := p.(error)
+	if ok {
+		fmt.Println(err)
+	}
+}
+
 func scanDirectory(path string) {
 	fmt.Println(path)
 	files, err := ioutil.ReadDir(path)
@@ -23,5 +34,6 @@ func scanDirectory(path string) {
 }
 
 func main() {
-	scanDirectory("c:\\users")
+	defer reportPanic()
+	scanDirectory("c:\\users\\Public\\Documents")
 }
