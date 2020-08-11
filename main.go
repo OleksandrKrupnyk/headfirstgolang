@@ -9,14 +9,18 @@ import (
 
 func main() {
 	sizes := make(chan int)
-	go responseSize("https://example.com/", sizes)
-	go responseSize("https://golang.org/", sizes)
-	go responseSize("https://golang.org/doc", sizes)
-	go responseSize("https://yap.ru", sizes)
-	fmt.Println(<-sizes)
-	fmt.Println(<-sizes)
-	fmt.Println(<-sizes)
-	fmt.Println(<-sizes)
+	urls := []string{
+		"https://example.com/",
+		"https://golang.org/",
+		"https://golang.org/doc",
+	}
+	for _, url := range urls {
+		go responseSize(url, sizes)
+	}
+	for i := 0; i < len(urls); i++ {
+		fmt.Println(<-sizes)
+
+	}
 }
 
 func responseSize(url string, channel chan<- int) {
