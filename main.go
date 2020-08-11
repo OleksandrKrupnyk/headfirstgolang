@@ -5,18 +5,21 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"time"
 )
 
 func main() {
-	go responseSize("https://example.com/")
-	go responseSize("https://golang.org/")
-	go responseSize("https://golang.org/doc")
-	go responseSize("https://yap.ru")
-	time.Sleep(1 * time.Second)
+	sizes := make(chan int)
+	go responseSize("https://example.com/", sizes)
+	go responseSize("https://golang.org/", sizes)
+	go responseSize("https://golang.org/doc", sizes)
+	go responseSize("https://yap.ru", sizes)
+	fmt.Println(<-sizes)
+	fmt.Println(<-sizes)
+	fmt.Println(<-sizes)
+	fmt.Println(<-sizes)
 }
 
-func responseSize(url string) {
+func responseSize(url string, channel chan<- int) {
 	fmt.Println("Getting", url)
 	response, err := http.Get(url)
 	if err != nil {
@@ -27,5 +30,5 @@ func responseSize(url string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(len(body))
+	channel <- len(body)
 }
