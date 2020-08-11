@@ -3,40 +3,29 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"path/filepath"
+	"log"
+	"net/http"
+	"time"
 )
 
-func reportPanic() {
-	p := recover()
-	if p == nil {
-		return
-	}
-	err, ok := p.(error)
-	if ok {
-		fmt.Println(err)
-	} else {
-		panic(p)
-	}
-}
-
-func scanDirectory(path string) {
-	fmt.Println(path)
-	files, err := ioutil.ReadDir(path)
-	if err != nil {
-		panic(err)
-	}
-	for _, file := range files {
-		filePath := filepath.Join(path, file.Name())
-		if file.IsDir() {
-			scanDirectory(filePath)
-		} else {
-			fmt.Println("File:", file.Name())
-		}
-	}
-}
-
 func main() {
-	defer reportPanic()
-	panic("Test")
-	scanDirectory("c:\\users\\Public\\Documents")
+	go responseSize("https://example.com/")
+	go responseSize("https://golang.org/")
+	go responseSize("https://golang.org/doc")
+	go responseSize("https://yap.ru")
+	time.Sleep(1 * time.Second)
+}
+
+func responseSize(url string) {
+	fmt.Println("Getting", url)
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(len(body))
 }
