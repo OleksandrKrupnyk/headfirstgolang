@@ -1,13 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"prose"
+	"log"
+	"net/http"
 )
 
+func viewHandler(writer http.ResponseWriter, request *http.Request) {
+	message := []byte("Hello, web!")
+	_, err := writer.Write(message)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func main() {
-	phrases := []string{"my parents", "a rodeo clown"}
-	fmt.Println("A photo of", prose.JoinWithCommas(phrases))
-	phrases = []string{"my parents", "a rodeo clown", "a prize bull"}
-	fmt.Println("A photo of", prose.JoinWithCommas(phrases))
+	http.HandleFunc("/hello", viewHandler)
+	err := http.ListenAndServe("localhost:8080", nil)
+	log.Fatal(err)
 }
