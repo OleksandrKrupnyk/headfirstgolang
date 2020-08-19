@@ -1,3 +1,6 @@
 First signature
 Second signature
 Third signature
+I am strange string in this case
+
+Help me! &nbsp;&copy;
