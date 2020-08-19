@@ -5,27 +5,20 @@ import (
 	"net/http"
 )
 
-func write(writer http.ResponseWriter, message string) {
-	_, err := writer.Write([]byte(message))
+func check(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func englishHandler(writer http.ResponseWriter, request *http.Request) {
-	write(writer, "Hello, web!")
-}
-func frenchHandler(writer http.ResponseWriter, request *http.Request) {
-	write(writer, "Salut web!")
-}
-func hindiHandler(writer http.ResponseWriter, request *http.Request) {
-	write(writer, "Namaste, web!")
+func viewHandler(writer http.ResponseWriter, request *http.Request) {
+	placeholder := []byte("signature list goes here")
+	_, err := writer.Write(placeholder)
+	check(err)
 }
 
 func main() {
-	http.HandleFunc("/hello", englishHandler)
-	http.HandleFunc("/salut", frenchHandler)
-	http.HandleFunc("/namaste", hindiHandler)
+	http.HandleFunc("/guestbook", viewHandler)
 	err := http.ListenAndServe("localhost:8080", nil)
 	log.Fatal(err)
 }
